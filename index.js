@@ -21,6 +21,18 @@ async function run() {
   try {
     await client.connect();
 
+    const database = client.db('employees_data');
+    const employeeCollection = database.collection('employeesData');
+
+    // PUT - Add an emplyee in emplyees collection
+    app.post('/add-elmployee', async (req, res) => {
+      const employeeData = req.body;
+      console.log(employeeData);
+      const result = await employeeCollection.insertOne(employeeData);
+      console.log(result);
+      res.json(result);
+  })
+
     console.log("database connected successfully");
   } finally {
     // await client.close();
